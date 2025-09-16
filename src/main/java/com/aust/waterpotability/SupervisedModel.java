@@ -10,16 +10,13 @@ import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.SerializationHelper;
 import weka.core.converters.ConverterUtils.DataSource;
-import weka.filters.Filter;
-import weka.filters.supervised.instance.SMOTE;
-
 import java.io.File;
 import java.util.Random;
 
 public class SupervisedModel {
 
     public static void main(String[] args) throws Exception {
-        // Load dataset
+
         Instances data = DataSource.read("data/processed_water_potability.arff");
         data.setClassIndex(data.numAttributes() - 1);
 
