@@ -10,10 +10,6 @@ import weka.filters.unsupervised.attribute.Normalize;
 
 import java.io.File;
 
-/**
- * Handles data loading, preprocessing (missing values, normalization),
- * and saving datasets for further use.
- */
 public class DataPreprocessor {
 
     // Convert CSV to ARFF
@@ -36,19 +32,24 @@ public class DataPreprocessor {
     public static Instances handleMissingValues(Instances data) throws Exception {
         ReplaceMissingValues replace = new ReplaceMissingValues();
         replace.setInputFormat(data);
-        Instances newData = Filter.useFilter(data, replace);
-        return newData;
+        return Filter.useFilter(data, replace);
     }
 
     // Normalize numeric attributes
     public static Instances normalizeData(Instances data) throws Exception {
         Normalize normalize = new Normalize();
         normalize.setInputFormat(data);
-        Instances newData = Filter.useFilter(data, normalize);
-        return newData;
+        return Filter.useFilter(data, normalize);
     }
 
-    // Pipeline: Load CSV -> Handle Missing -> Normalize -> Save ARFF
+    public static Instances NumericToNominal(Instances data, String range) throws Exception {
+        weka.filters.unsupervised.attribute.NumericToNominal convert = new weka.filters.unsupervised.attribute.NumericToNominal();
+        convert.setAttributeIndices(range);
+        convert.setInputFormat(data);
+        return Filter.useFilter(data, convert);
+    }
+
+    // Pipeline: Load CSV -> Handle Missing -> Normalize -> NumericToNominal(class attribute) -> Save ARFF
     public static Instances preprocess(String csvPath, String arffPath) throws Exception {
         Instances data = loadCSV(csvPath);
         System.out.println("Loaded CSV dataset with " + data.numInstances() + " instances.");
@@ -58,6 +59,9 @@ public class DataPreprocessor {
 
         data = normalizeData(data);
         System.out.println("Normalized numeric attributes.");
+
+        data = NumericToNominal(data, "last"); 
+        System.out.println("Converted Potability to nominal.");
 
         saveARFF(data, arffPath);
         System.out.println("Saved preprocessed dataset to " + arffPath);
