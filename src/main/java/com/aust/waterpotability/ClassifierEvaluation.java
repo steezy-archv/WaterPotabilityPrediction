@@ -13,7 +13,7 @@ import java.util.Random;
 public class ClassifierEvaluation {
 
     public static void main(String[] args) throws Exception {
-        // Load the processed dataset
+
         DataSource source = new DataSource("data/processed_water_potability.arff");
         Instances dataset = source.getDataSet();
 

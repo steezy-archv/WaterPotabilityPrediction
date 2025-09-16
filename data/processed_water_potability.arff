@@ -1,4 +1,4 @@
-@relation water_potability-weka.filters.unsupervised.attribute.ReplaceMissingValues-weka.filters.unsupervised.attribute.Normalize-S1.0-T0.0
+@relation water_potability-weka.filters.unsupervised.attribute.ReplaceMissingValues-weka.filters.unsupervised.attribute.Normalize-S1.0-T0.0-weka.filters.unsupervised.attribute.NumericToNominal-R10
 
 @attribute ph numeric
 @attribute Hardness numeric
@@ -9,7 +9,7 @@
 @attribute Organic_carbon numeric
 @attribute Trihalomethanes numeric
 @attribute Turbidity numeric
-@attribute Potability numeric
+@attribute Potability {0,1}
 
 @data
 0.505771,0.571139,0.336096,0.543891,0.680385,0.669439,0.313402,0.699753,0.286091,0

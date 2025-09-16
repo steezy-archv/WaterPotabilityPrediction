@@ -15,8 +15,7 @@ public class SupervisedModel {
         Instances data = DataSource.read("data/processed_water_potability.arff");
         data.setClassIndex(data.numAttributes() - 1);
 
-        // Try NaiveBayes, J48, RandomForest
-        // runClassifier(new NaiveBayes(), data, "Naive Bayes");
+        runClassifier(new NaiveBayes(), data, "Naive Bayes");
         runClassifier(new J48(), data, "Decision Tree (J48)");
         runClassifier(new RandomForest(), data, "Random Forest");
     }
