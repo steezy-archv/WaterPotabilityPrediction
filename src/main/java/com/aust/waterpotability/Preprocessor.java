@@ -4,6 +4,7 @@ import weka.core.Instances;
 import weka.core.converters.CSVLoader;
 import weka.core.converters.ArffSaver;
 import weka.filters.Filter;
+import weka.filters.supervised.instance.SMOTE;
 import weka.filters.unsupervised.attribute.ReplaceMissingValues;
 import weka.filters.unsupervised.attribute.Normalize;
 import weka.filters.unsupervised.attribute.NumericToNominal;
@@ -24,18 +25,28 @@ public class Preprocessor {
         data = Filter.useFilter(data, rmv);
         System.out.println("Handled missing values.");
 
-        // Normalize numeric attributes
-        Normalize norm = new Normalize();
-        norm.setInputFormat(data);
-        data = Filter.useFilter(data, norm);
-        System.out.println("Normalized numeric attributes.");
-
         // Convert last attribute (Potability) to nominal
         NumericToNominal numToNom = new NumericToNominal();
         numToNom.setAttributeIndices("" + (data.numAttributes())); // last attribute
         numToNom.setInputFormat(data);
         data = Filter.useFilter(data, numToNom);
         System.out.println("Converted Potability to nominal.");
+
+        // Balance dataset using SMOTE
+        if (data.classIndex() == -1) {
+            data.setClassIndex(data.numAttributes() - 1); // ensure class is set
+        }
+
+        SMOTE smote = new SMOTE();
+        smote.setInputFormat(data);
+        smote.setPercentage(100.0); // oversample minority class by 100%
+        data = Filter.useFilter(data, smote);
+        
+        // Normalize numeric attributes
+        Normalize norm = new Normalize();
+        norm.setInputFormat(data);
+        data = Filter.useFilter(data, norm);
+        System.out.println("Normalized numeric attributes.");
 
         // Save as ARFF
         ArffSaver saver = new ArffSaver();

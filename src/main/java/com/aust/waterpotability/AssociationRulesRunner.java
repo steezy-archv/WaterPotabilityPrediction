@@ -27,7 +27,7 @@ public class AssociationRulesRunner {
         if (algorithm.equalsIgnoreCase("Apriori")) {
             System.out.println("=== Running Apriori ===");
             Apriori apriori = new Apriori();
-            apriori.setClassIndex(newData.classIndex()); // optional
+            apriori.setClassIndex(newData.classIndex()); 
             apriori.setLowerBoundMinSupport(0.1); // support threshold
             apriori.setMinMetric(0.7);            // confidence threshold
             apriori.buildAssociations(newData);
