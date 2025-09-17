@@ -20,16 +20,12 @@ public class SupervisedModel {
         Instances data = DataSource.read("data/processed_water_potability.arff");
         data.setClassIndex(data.numAttributes() - 1);
 
-        // Build Voting classifier
         Vote voter = buildVotingClassifier();
 
-        // Evaluate using stratified 10-fold CV
         evaluateModel(voter, data);
 
-        // Train on full dataset and save
         saveModel(voter, data, "models/water_quality_voting.model");
 
-        // Example: load model and predict
         testLoadModel("models/water_quality_voting.model", data);
     }
 

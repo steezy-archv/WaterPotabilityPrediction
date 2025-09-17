@@ -28,11 +28,10 @@ public class AssociationRulesRunner {
             System.out.println("=== Running Apriori ===");
             Apriori apriori = new Apriori();
             apriori.setClassIndex(newData.classIndex()); 
-            apriori.setLowerBoundMinSupport(0.1); // support threshold
-            apriori.setMinMetric(0.7);            // confidence threshold
+            apriori.setLowerBoundMinSupport(0.1); 
+            apriori.setMinMetric(0.7);   
             apriori.buildAssociations(newData);
 
-            // Print rules
             System.out.println(apriori);
         } else if (algorithm.equalsIgnoreCase("FP")) {
             System.out.println("=== Running FP-Growth ===");
@@ -40,7 +39,6 @@ public class AssociationRulesRunner {
             fpGrowth.setNumRulesToFind(10); // number of rules to output
             fpGrowth.buildAssociations(newData);
 
-            // Print rules
             AssociationRules rules = fpGrowth.getAssociationRules();
             for (AssociationRule rule : rules.getRules()) {
                 System.out.println(rule);
