@@ -34,7 +34,7 @@ public class Preprocessor {
 
         // Balance dataset using SMOTE
         if (data.classIndex() == -1) {
-            data.setClassIndex(data.numAttributes() - 1); // ensure class is set
+            data.setClassIndex(data.numAttributes() - 1); 
         }
 
         SMOTE smote = new SMOTE();

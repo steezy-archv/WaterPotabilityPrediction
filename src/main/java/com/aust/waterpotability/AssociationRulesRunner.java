@@ -13,7 +13,7 @@ public class AssociationRulesRunner {
 
     public static void main(String[] args) throws Exception {
 
-        DataSource source = new DataSource("data/processed_water_potability.arff");
+        DataSource source = new DataSource("data/raw_processed_water_potability.arff");
         Instances data = source.getDataSet();
 
         Discretize discretize = new Discretize();
@@ -28,15 +28,15 @@ public class AssociationRulesRunner {
             System.out.println("=== Running Apriori ===");
             Apriori apriori = new Apriori();
             apriori.setClassIndex(newData.classIndex()); 
-            apriori.setLowerBoundMinSupport(0.1); 
-            apriori.setMinMetric(0.7);   
+            apriori.setLowerBoundMinSupport(0.05); 
+            apriori.setMinMetric(0.6);   
             apriori.buildAssociations(newData);
 
             System.out.println(apriori);
         } else if (algorithm.equalsIgnoreCase("FP")) {
             System.out.println("=== Running FP-Growth ===");
             FPGrowth fpGrowth = new FPGrowth();
-            fpGrowth.setNumRulesToFind(10); // number of rules to output
+            fpGrowth.setNumRulesToFind(10);
             fpGrowth.buildAssociations(newData);
 
             AssociationRules rules = fpGrowth.getAssociationRules();
